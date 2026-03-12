@@ -16,30 +16,33 @@ const { width = 30, height = 30 } = Astro.props;
   style="overflow: visible;"
 >
   <g id="ghost-head">
-    <!-- Circle: black in light mode, hidden in dark mode -->
+    <!-- Layer 1: circle background -->
     <circle cx="50" cy="50" r="48" fill="var(--ghost-circle)" />
-    <!-- Ghost body with eye holes cut out via evenodd -->
+    <!-- Layer 2: solid ghost body -->
     <path
-      fill-rule="evenodd"
-      d="M18 52 C18 30 32 14 50 14 C68 14 82 30 82 52 L82 82 L73 73 L64 82 L55 73 L46 82 L37 73 L28 82 Z
-         M32 48 A6 7 0 1 0 44 48 A6 7 0 1 0 32 48 Z
-         M56 48 A6 7 0 1 0 68 48 A6 7 0 1 0 56 48 Z"
+      d="M18 52 C18 30 32 14 50 14 C68 14 82 30 82 52 L82 82 L73 73 L64 82 L55 73 L46 82 L37 73 L28 82 Z"
       fill="var(--ghost-body)"
     />
-    <!-- White pupils — visible inside the dark eye holes, follow cursor -->
-    <ellipse id="ghost-left-eye"  cx="38" cy="48" rx="3" ry="3.5" fill="var(--ghost-body)" />
-    <ellipse id="ghost-right-eye" cx="62" cy="48" rx="3" ry="3.5" fill="var(--ghost-body)" />
+    <!-- Layer 3: eyes — same color as circle, move with cursor -->
+    <ellipse id="ghost-left-eye"  cx="38" cy="48" rx="6" ry="7" fill="var(--ghost-eye)" />
+    <ellipse id="ghost-right-eye" cx="62" cy="48" rx="6" ry="7" fill="var(--ghost-eye)" />
   </g>
 </svg>
 
 <style>
+  /*
+    Light mode: zinc-900 circle, stone-100 ghost, zinc-900 eyes
+    Dark  mode: stone-100 circle, zinc-900 ghost, stone-100 eyes
+  */
   :root {
-    --ghost-circle: #000000;
-    --ghost-body:   #f8fafc;
+    --ghost-circle: #18181b; /* zinc-900 */
+    --ghost-body:   #f5f5f4; /* stone-100 */
+    --ghost-eye:    #18181b; /* zinc-900 */
   }
   .dark {
-    --ghost-circle: transparent;
-    --ghost-body:   #e2e8f0;
+    --ghost-circle: #f5f5f4; /* stone-100 */
+    --ghost-body:   #18181b; /* zinc-900 */
+    --ghost-eye:    #f5f5f4; /* stone-100 */
   }
 </style>
 
@@ -57,11 +60,10 @@ const { width = 30, height = 30 } = Astro.props;
 
     if (!svg || !head || !leftEye || !rightEye) return;
 
-    // Re-assign to non-nullable locals so closures inherit the narrowed type
-    const svgEl: SVGSVGElement      = svg;
-    const headEl: SVGGElement       = head;
-    const le: SVGEllipseElement     = leftEye;
-    const re: SVGEllipseElement     = rightEye;
+    const svgEl:  SVGSVGElement    = svg;
+    const headEl: SVGGElement      = head;
+    const le:     SVGEllipseElement = leftEye;
+    const re:     SVGEllipseElement = rightEye;
 
     const controller = new AbortController();
     const { signal } = controller;
@@ -115,7 +117,7 @@ const { width = 30, height = 30 } = Astro.props;
 
     function blink() {
       blinking = true;
-      const steps = [3.5, 2, 0.5, 0.1, 0.5, 2, 3.5];
+      const steps = [7, 4, 1.5, 0.2, 1.5, 4, 7];
       let i = 0;
       const tick = setInterval(() => {
         le.setAttribute("ry", String(steps[i]));
@@ -123,8 +125,8 @@ const { width = 30, height = 30 } = Astro.props;
         i++;
         if (i >= steps.length) {
           clearInterval(tick);
-          le.setAttribute("ry", "3.5");
-          re.setAttribute("ry", "3.5");
+          le.setAttribute("ry", "7");
+          re.setAttribute("ry", "7");
           le.setAttribute("cx", String(LEFT_CENTER.x  + leftOffset.x));
           le.setAttribute("cy", String(LEFT_CENTER.y  + leftOffset.y));
           re.setAttribute("cx", String(RIGHT_CENTER.x + rightOffset.x));
