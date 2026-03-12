@@ -1,0 +1,140 @@
+---
+interface Props {
+  width?: number;
+  height?: number;
+}
+const { width = 30, height = 30 } = Astro.props;
+---
+
+<svg
+  id="ghost-logo"
+  width={width}
+  height={height}
+  viewBox="0 0 100 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  style="overflow: visible;"
+>
+  <g id="ghost-head">
+    <circle cx="50" cy="50" r="48" fill="var(--ghost-bg)" />
+    <path
+      d="M18 52 C18 30 32 14 50 14 C68 14 82 30 82 52 L82 82 L73 73 L64 82 L55 73 L46 82 L37 73 L28 82 Z"
+      fill="var(--ghost-body)"
+    />
+    <ellipse id="ghost-left-eye"  cx="38" cy="48" rx="6" ry="7" fill="var(--ghost-eye)" />
+    <ellipse id="ghost-right-eye" cx="62" cy="48" rx="6" ry="7" fill="var(--ghost-eye)" />
+  </g>
+</svg>
+
+<style>
+  :root {
+    --ghost-bg:   #1e293b;
+    --ghost-body: #f8fafc;
+    --ghost-eye:  #1e293b;
+  }
+  .dark {
+    --ghost-bg:   #e2e8f0;
+    --ghost-body: #0f1117;
+    --ghost-eye:  #e2e8f0;
+  }
+</style>
+
+<script>
+  const LEFT_CENTER  = { x: 38, y: 48 };
+  const RIGHT_CENTER = { x: 62, y: 48 };
+  const MAX_TRAVEL   = 4;
+  const MAX_TILT     = 5;
+
+  function init() {
+    const svg      = document.getElementById("ghost-logo") as SVGSVGElement | null;
+    const head     = document.getElementById("ghost-head") as SVGGElement | null;
+    const leftEye  = document.getElementById("ghost-left-eye")  as SVGEllipseElement | null;
+    const rightEye = document.getElementById("ghost-right-eye") as SVGEllipseElement | null;
+
+    if (!svg || !head || !leftEye || !rightEye) return;
+
+    // Re-assign to non-nullable locals so closures inherit the narrowed type
+    const svgEl: SVGSVGElement      = svg;
+    const headEl: SVGGElement       = head;
+    const le: SVGEllipseElement     = leftEye;
+    const re: SVGEllipseElement     = rightEye;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    let leftOffset  = { x: 0, y: 0 };
+    let rightOffset = { x: 0, y: 0 };
+    let blinking    = false;
+
+    function calcOffset(
+      eye: { x: number; y: number },
+      svgX: number,
+      svgY: number,
+      mult: number
+    ) {
+      const dx   = svgX - eye.x;
+      const dy   = svgY - eye.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const t    = Math.min(dist / 45, 1) * MAX_TRAVEL * mult;
+      const a    = Math.atan2(dy, dx);
+      return { x: Math.cos(a) * t, y: Math.sin(a) * t };
+    }
+
+    document.addEventListener(
+      "mousemove",
+      (e) => {
+        const rect   = svgEl.getBoundingClientRect();
+        const scaleX = 100 / rect.width;
+        const scaleY = 100 / rect.height;
+        const svgX   = (e.clientX - rect.left) * scaleX;
+        const svgY   = (e.clientY - rect.top)  * scaleY;
+
+        const tilt = Math.max(-MAX_TILT, Math.min(MAX_TILT, (svgX - 50) * 0.1));
+        headEl.setAttribute("transform", `rotate(${tilt.toFixed(2)}, 50, 50)`);
+
+        leftOffset  = calcOffset(LEFT_CENTER,  svgX, svgY, 1.0);
+        rightOffset = calcOffset(RIGHT_CENTER, svgX, svgY, 0.85);
+
+        if (!blinking) {
+          le.setAttribute("cx", String(LEFT_CENTER.x  + leftOffset.x));
+          le.setAttribute("cy", String(LEFT_CENTER.y  + leftOffset.y));
+          re.setAttribute("cx", String(RIGHT_CENTER.x + rightOffset.x));
+          re.setAttribute("cy", String(RIGHT_CENTER.y + rightOffset.y));
+        }
+      },
+      { signal }
+    );
+
+    function scheduleBlink() {
+      setTimeout(blink, 2000 + Math.random() * 3000);
+    }
+
+    function blink() {
+      blinking = true;
+      const steps = [7, 4, 1.5, 0.2, 1.5, 4, 7];
+      let i = 0;
+      const tick = setInterval(() => {
+        le.setAttribute("ry", String(steps[i]));
+        re.setAttribute("ry", String(steps[i]));
+        i++;
+        if (i >= steps.length) {
+          clearInterval(tick);
+          le.setAttribute("ry", "7");
+          re.setAttribute("ry", "7");
+          le.setAttribute("cx", String(LEFT_CENTER.x  + leftOffset.x));
+          le.setAttribute("cy", String(LEFT_CENTER.y  + leftOffset.y));
+          re.setAttribute("cx", String(RIGHT_CENTER.x + rightOffset.x));
+          re.setAttribute("cy", String(RIGHT_CENTER.y + rightOffset.y));
+          blinking = false;
+          scheduleBlink();
+        }
+      }, 38);
+    }
+
+    scheduleBlink();
+
+    document.addEventListener("astro:before-swap", () => controller.abort(), { once: true, signal });
+  }
+
+  document.addEventListener("astro:page-load", init);
+</script>

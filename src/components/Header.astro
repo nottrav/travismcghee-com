@@ -1,5 +1,6 @@
 ---
 import Container from "@components/Container.astro";
+import GhostLogo from "@components/GhostLogo.astro";
 import Link from "@components/Link.astro";
 import { SITE } from "@consts";
 ---
@@ -9,15 +10,7 @@ import { SITE } from "@consts";
     <div class="flex flex-wrap gap-y-2 justify-between">
       <Link href="/" underline={false}>
         <div class="font-semibold flex items-center gap-2">
-          {SITE.LOGO && (
-            <img
-              src={SITE.LOGO}
-              alt={`${SITE.NAME} logo`}
-              width="30"
-              height="30"
-              class="h-[30px] w-[30px] rounded-sm object-cover"
-            />
-          )}
+          <GhostLogo width={30} height={30} />
           <span>{SITE.NAME}</span>
         </div>
       </Link>
