@@ -1,0 +1,68 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  currentPost: CollectionEntry<"blog">;
+  seriesPosts: CollectionEntry<"blog">[];
+};
+
+const { currentPost, seriesPosts } = Astro.props;
+const series = currentPost.data.series!;
+const sorted = seriesPosts.sort((a, b) => a.data.series!.order - b.data.series!.order);
+const currentIndex = sorted.findIndex((p) => p.slug === currentPost.slug);
+const prev = currentIndex > 0 ? sorted[currentIndex - 1] : null;
+const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+---
+
+<nav class="series-nav rounded-lg border border-black/15 dark:border-white/20 overflow-hidden my-8">
+  <div class="px-4 py-3 border-b border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
+    <div class="flex items-center gap-2 text-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="size-4 text-black/40 dark:text-white/40">
+        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+      </svg>
+      <span class="font-semibold text-black dark:text-white">{series.name}</span>
+      <span class="text-black/40 dark:text-white/40">&middot;</span>
+      <span class="text-black/40 dark:text-white/40">Part {series.order} of {sorted.length}</span>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2">
+    {prev ? (
+      <a
+        href={`/blog/${prev.slug}`}
+        class="series-link group flex flex-col gap-1 px-4 py-3 no-underline border-r border-black/10 dark:border-white/10 hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors duration-200"
+      >
+        <span class="text-[11px] uppercase tracking-wider text-black/35 dark:text-white/35 flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+          Previous
+        </span>
+        <span class="text-sm text-black/70 dark:text-white/70 group-hover:text-black dark:group-hover:text-white transition-colors duration-200 line-clamp-1">
+          Part {prev.data.series!.order}: {prev.data.title}
+        </span>
+      </a>
+    ) : (
+      <div class="border-r border-black/10 dark:border-white/10" />
+    )}
+
+    {next ? (
+      <a
+        href={`/blog/${next.slug}`}
+        class="series-link group flex flex-col gap-1 px-4 py-3 no-underline text-right hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors duration-200"
+      >
+        <span class="text-[11px] uppercase tracking-wider text-black/35 dark:text-white/35 flex items-center justify-end gap-1">
+          Next
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </span>
+        <span class="text-sm text-black/70 dark:text-white/70 group-hover:text-black dark:group-hover:text-white transition-colors duration-200 line-clamp-1">
+          Part {next.data.series!.order}: {next.data.title}
+        </span>
+      </a>
+    ) : (
+      <div />
+    )}
+  </div>
+</nav>
