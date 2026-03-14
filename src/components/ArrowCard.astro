@@ -36,17 +36,18 @@ const tags = showTags && entry.collection === "blog"
     </svg>
   </a>
 ) : (
-  <article
-    class="group flex justify-between items-start gap-3 py-3 px-4 rounded-lg border border-black/15 dark:border-white/20 bg-white/30 dark:bg-white/[0.02] hover:bg-white/60 dark:hover:bg-white/[0.04] hover:text-black dark:hover:text-white hover:-translate-y-0.5 hover:shadow-sm transition-all duration-300 ease-in-out"
+  <a
+    href={`/${entry.collection}/${entry.slug}`}
+    class="relative group flex justify-between items-start gap-3 py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 bg-white/30 dark:bg-white/[0.02] hover:bg-white/60 dark:hover:bg-white/[0.04] hover:text-black dark:hover:text-white hover:-translate-y-0.5 hover:shadow-sm transition-all duration-300 ease-in-out"
   >
     <div class="flex flex-col flex-1 min-w-0">
-      <a href={`/${entry.collection}/${entry.slug}`} class="font-semibold truncate no-underline hover:underline underline-offset-2">
+      <div class="font-semibold truncate">
         {entry.data.title}
-      </a>
+      </div>
       <div class="text-sm leading-snug text-black/60 dark:text-white/60 line-clamp-2 mt-0.5">
         {entry.data.description}
       </div>
-      <div class="flex flex-wrap gap-1.5 mt-2">
+      <div class="relative z-10 flex flex-wrap gap-1.5 mt-2" onclick="event.stopPropagation();">
         {tags.map((tag) => (
           <a
             href={`/blog/tag/${tagToSlug(tag)}`}
@@ -57,19 +58,13 @@ const tags = showTags && entry.collection === "blog"
         ))}
       </div>
     </div>
-    <a
-      href={`/${entry.collection}/${entry.slug}`}
-      aria-label={`Open ${entry.data.title}`}
-      class="shrink-0 mt-0.5 p-1 rounded-md hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      class="absolute top-1/2 right-2 -translate-y-1/2 size-5 stroke-2 fill-none stroke-current"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        class="size-5 stroke-2 fill-none stroke-current"
-      >
-        <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out" />
-        <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
-      </svg>
-    </a>
-  </article>
+      <line x1="5" y1="12" x2="19" y2="12" class="translate-x-3 group-hover:translate-x-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out" />
+      <polyline points="12 5 19 12 12 19" class="-translate-x-1 group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
+    </svg>
+  </a>
 )}

@@ -13,9 +13,16 @@ export function formatDate(date: Date) {
   }).format(date);
 }
 
-export function readingTime(html: string) {
-  const textOnly = html.replace(/<[^>]+>/g, "");
-  const wordCount = textOnly.split(/\s+/).length;
+export function readingTime(markdown: string) {
+  const textOnly = markdown
+    .replace(/<[^>]+>/g, "")       // strip inline HTML
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")  // strip images
+    .replace(/\[[^\]]*\]\([^)]*\)/g, (m) => m.replace(/\[|\]\([^)]*\)/g, "")) // links to text
+    .replace(/#{1,6}\s+/g, "")     // strip heading markers
+    .replace(/[*_~`>|]/g, "")      // strip emphasis/quote/code markers
+    .replace(/---+/g, "")          // strip horizontal rules
+    .replace(/\n+/g, " ");         // collapse newlines
+  const wordCount = textOnly.split(/\s+/).filter(Boolean).length;
   const readingTimeMinutes = ((wordCount / 200) + 1).toFixed();
   return `${readingTimeMinutes} min read`;
 }

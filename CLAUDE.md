@@ -49,6 +49,6 @@ New project: create a `.md` file in `src/content/projects/`.
 
 ## Notes
 
-- `astro.config.mjs` still has the placeholder site URL (`astro-nano-demo.vercel.app`) — update before deploying
+- Site URL is set to `https://travismcghee.com` in `astro.config.mjs`
 - Tag utility functions including special `"DCIM Capstone"` handling live in `src/lib/utils.ts`
 - PDFs served from `public/` (capstone, research papers)
