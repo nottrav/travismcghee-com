@@ -1,0 +1,30 @@
+---
+type Props = {
+  headings: { depth: number; slug: string; text: string }[];
+};
+
+const { headings } = Astro.props;
+const filteredHeadings = headings.filter((h) => h.depth <= 3);
+---
+
+{filteredHeadings.length >= 3 && (
+  <details class="my-6 rounded-lg border border-black/15 dark:border-white/20 overflow-hidden">
+    <summary class="cursor-pointer px-4 py-2.5 text-sm font-semibold text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200 select-none">
+      Table of Contents
+    </summary>
+    <nav class="px-4 pb-3 pt-1">
+      <ul class="space-y-1.5 text-sm list-none pl-0">
+        {filteredHeadings.map((heading) => (
+          <li style={heading.depth > 2 ? `padding-left: ${(heading.depth - 2) * 1}rem` : ""}>
+            <a
+              href={`#${heading.slug}`}
+              class="no-underline text-black/50 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors duration-200"
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </details>
+)}

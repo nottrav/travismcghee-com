@@ -79,18 +79,21 @@ const { title, description, image = "/og-image.png" } = Astro.props;
     lightThemeButton?.addEventListener("click", () => {
       localStorage.setItem(THEME_KEY, "light");
       toggleTheme(false);
+      updateActiveThemeButton();
     });
 
     const darkThemeButton = document.getElementById("dark-theme-button");
     darkThemeButton?.addEventListener("click", () => {
       localStorage.setItem(THEME_KEY, "dark");
       toggleTheme(true);
+      updateActiveThemeButton();
     });
 
     const systemThemeButton = document.getElementById("system-theme-button");
     systemThemeButton?.addEventListener("click", () => {
       localStorage.setItem(THEME_KEY, "system");
       toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+      updateActiveThemeButton();
     });
 
     if (!faviconThemeListenersBound) {
@@ -115,15 +118,35 @@ const { title, description, image = "/og-image.png" } = Astro.props;
     }
 
     document.addEventListener("scroll", onScroll);
+
+    updateActiveThemeButton();
   }
 
   function animate() {
     const animateElements = document.querySelectorAll(".animate");
 
-    animateElements.forEach((element, index) => {
-      setTimeout(() => {
-        element.classList.add("show");
-      }, index * 150);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    animateElements.forEach((element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.75) {
+        const index = Array.from(animateElements).indexOf(element);
+        setTimeout(() => {
+          element.classList.add("show");
+        }, index * 150);
+      } else {
+        observer.observe(element);
+      }
     });
   }
 
@@ -202,6 +225,13 @@ function toggleTheme(dark) {
     } else {
       toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
     }
+  }
+
+  function updateActiveThemeButton() {
+    const theme = localStorage.getItem(THEME_KEY) || "system";
+    document.getElementById("light-theme-button")?.classList.toggle("theme-active", theme === "light");
+    document.getElementById("dark-theme-button")?.classList.toggle("theme-active", theme === "dark");
+    document.getElementById("system-theme-button")?.classList.toggle("theme-active", theme === "system" || !localStorage.getItem(THEME_KEY));
   }
 
   document.addEventListener("DOMContentLoaded", () => init());

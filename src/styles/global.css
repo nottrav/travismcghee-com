@@ -10,6 +10,8 @@ html {
   overflow-y: scroll;
   color-scheme: light;
   font-size: 18px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 html.dark {
@@ -26,6 +28,12 @@ body {
   @apply flex flex-col;
   @apply bg-stone-100 dark:bg-zinc-900;
   @apply text-black/50 dark:text-white/75;
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+html.dark body {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
 
 header {

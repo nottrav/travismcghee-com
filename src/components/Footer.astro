@@ -29,6 +29,31 @@ const currentYear = new Date().getFullYear();
         </p>
       </div>
       <div class="flex flex-wrap gap-1 items-center">
+        <a
+          href="/rss.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="RSS Feed"
+          class="group size-8 flex items-center justify-center rounded-full"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="group-hover:stroke-black group-hover:dark:stroke-white transition-colors duration-300 ease-in-out"
+          >
+            <path d="M4 11a9 9 0 0 1 9 9"></path>
+            <path d="M4 4a16 16 0 0 1 16 16"></path>
+            <circle cx="5" cy="19" r="1"></circle>
+          </svg>
+        </a>
+        <div class="w-px h-4 bg-black/10 dark:bg-white/10 mx-0.5"></div>
         <button
           id="light-theme-button"
           aria-label="Light theme"
@@ -102,4 +127,13 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
   </Container>
+<style>
+  .theme-active {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 9999px;
+  }
+  :global(.dark) .theme-active {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+</style>
 </footer>
