@@ -39,7 +39,7 @@ const seriesPosts = post.data.series
       </BackToPrev>
     </div>
     <div class="space-y-1 my-10">
-      <div class="animate flex items-center gap-1.5 text-sm font-mono text-black/50 dark:text-white/50">
+      <div class="animate flex items-center gap-1.5 text-sm text-black/50 dark:text-white/50">
         <FormattedDate date={post.data.date} />
         <span>&bull;</span>
         <span>{readingTime(post.body)}</span>
@@ -50,14 +50,14 @@ const seriesPosts = post.data.series
       {(tags.length > 0 || post.data.series) && (
         <div class="animate flex flex-wrap items-center gap-2 pt-2">
           {post.data.series && (
-            <span class="font-mono text-xs rounded-md px-2 py-1 border border-black/15 dark:border-white/20">
+            <span class="text-xs rounded-md px-2 py-1 border border-black/15 dark:border-white/20">
               {post.data.series.name} · Part {post.data.series.order}
             </span>
           )}
           {tags.map((tag) => (
             <a
               href={`/blog/tag/${tagToSlug(tag)}`}
-              class="tag-link no-underline font-mono text-xs rounded-md px-2 py-1 border border-black/15 dark:border-white/20 hover:border-[var(--accent-muted)] hover:bg-[var(--accent-subtle)] hover:scale-105 transition-all duration-200"
+              class="tag-link no-underline text-xs rounded-md px-2 py-1 border border-black/15 dark:border-white/20 hover:border-[var(--accent-muted)] hover:bg-[var(--accent-subtle)] hover:scale-105 transition-all duration-200"
             >
               {tag}
             </a>
