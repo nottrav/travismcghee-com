@@ -110,15 +110,12 @@ const connectLinks = [
 
       <section class="animate space-y-4">
         <h2 class="text-xl font-semibold text-black dark:text-white">
-          Let's Connect
+          Connect
         </h2>
-        <article>
-          <p>
-            If you want to connect, collaborate, or discuss cybersecurity, reach out
-            on social media.
-          </p>
-        </article>
-        <ul class="flex flex-wrap gap-2">
+        <p class="text-black/60 dark:text-white/60">
+          Find me on these platforms.
+        </p>
+        <ul class="flex flex-wrap gap-2 font-mono text-sm">
           {connectLinks.map((item, index) => (
             <li class="flex gap-x-2 text-nowrap">
               <Link
@@ -128,7 +125,7 @@ const connectLinks = [
               >
                 {item.label}
               </Link>
-              {index < connectLinks.length - 1 && "/"}
+              {index < connectLinks.length - 1 && <span class="text-black/30 dark:text-white/30">/</span>}
             </li>
           ))}
         </ul>

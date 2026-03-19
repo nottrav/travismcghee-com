@@ -26,7 +26,7 @@ const listProjects = featuredProjects.length > 0 ? otherProjects : projects;
           <ul class="flex flex-col gap-4">
             {featuredProjects.map((project) => (
               <li>
-                <ArrowCard entry={project} showTags={false}/>
+                <ArrowCard entry={project} showTags={false} featured={true} />
               </li>
             ))}
           </ul>
