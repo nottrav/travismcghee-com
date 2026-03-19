@@ -35,7 +35,7 @@ const totalPosts = posts.length;
           <h1 class="font-semibold text-black dark:text-white">Tags</h1>
           <Link href="/blog">Back to blog</Link>
         </div>
-        <p class="text-sm mt-2">
+        <p class="font-mono text-sm text-black/50 dark:text-white/50 mt-2">
           {tags.length} topics across {totalPosts} posts
         </p>
       </div>
@@ -51,7 +51,7 @@ const totalPosts = posts.length;
               <span class="font-semibold text-black dark:text-white text-sm group-hover:tracking-wide transition-all duration-300">
                 {tag.label}
               </span>
-              <span class="text-xs tabular-nums">
+              <span class="font-mono text-xs text-black/50 dark:text-white/50">
                 {tag.count} {tag.count === 1 ? "post" : "posts"}
               </span>
             </div>

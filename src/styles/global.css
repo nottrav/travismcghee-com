@@ -1,5 +1,7 @@
 @import "@fontsource-variable/instrument-sans";
 @import "@fontsource/lora";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
 
 @tailwind base;
 @tailwind components;
@@ -42,12 +44,23 @@ body {
   @apply flex flex-col;
   @apply bg-stone-100 dark:bg-zinc-900;
   @apply text-black/65 dark:text-white/75;
-  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.02) 3px,
+    rgba(0, 0, 0, 0.02) 4px
+  );
 }
 
 html.dark body {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255, 255, 255, 0.015) 3px,
+    rgba(255, 255, 255, 0.015) 4px
+  );
 }
 
 header {

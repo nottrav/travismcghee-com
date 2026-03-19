@@ -11,6 +11,7 @@ export default {
       fontFamily: {
         sans: ["Instrument Sans Variable", "Instrument Sans", ...defaultTheme.fontFamily.sans],
         serif: ["Lora", ...defaultTheme.fontFamily.serif],
+        mono: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
       },
     },
   },

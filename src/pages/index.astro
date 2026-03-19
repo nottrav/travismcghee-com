@@ -40,13 +40,13 @@ const connectLinks = [
       <h1 class="animate text-hero font-semibold tracking-tight text-black dark:text-white">
         Travis McGhee
       </h1>
-      <p class="animate text-black/60 dark:text-white/60">
+      <p class="animate font-mono text-sm text-black/50 dark:text-white/50">
         Cybersecurity · Privacy · IT
       </p>
     </div>
     <div class="space-y-16">
       <section>
-        <article class="space-y-4 max-w-2xl">
+        <article class="space-y-4 max-w-2xl border-l-2 border-black/10 dark:border-white/10 pl-4">
           <p class="animate">
             I'm a recent Rutgers grad with a degree in Information Technology, a concentration in Cybersecurity, and a minor in Digital Communication. I write here about cybersecurity and privacy, mostly real risks, common scam patterns, and practical ways to build safer habits online.
           </p>
@@ -57,6 +57,20 @@ const connectLinks = [
             I'm currently looking for entry-level roles in cybersecurity or IT. If my work looks like a good fit for what your team is building, I'd love to hear from you.
           </p>
         </article>
+        <div class="animate mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-mono text-black/50 dark:text-white/50">
+          <span class="flex items-center gap-1.5">
+            <span class="text-[var(--accent)]">&gt;</span> Security & Privacy
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="text-[var(--accent)]">&gt;</span> DNS & Networking
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="text-[var(--accent)]">&gt;</span> Data Analytics
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="text-[var(--accent)]">&gt;</span> Digital Communication
+          </span>
+        </div>
       </section>
 
       <section class="animate space-y-6">
@@ -71,7 +85,7 @@ const connectLinks = [
         <ul class="flex flex-col gap-4">
           {projects.map(project => (
             <li>
-              <ArrowCard entry={project} showTags={false} />
+              <ArrowCard entry={project} showTags={false} featured={true} />
             </li>
           ))}
         </ul>
