@@ -42,7 +42,7 @@ body {
 body {
   @apply font-sans antialiased;
   @apply flex flex-col;
-  @apply bg-stone-100 dark:bg-zinc-900;
+  @apply bg-slate-100 dark:bg-slate-900;
   @apply text-black/65 dark:text-white/75;
   background-image: repeating-linear-gradient(
     0deg,
@@ -65,7 +65,7 @@ html.dark body {
 
 header {
   @apply fixed top-0 left-0 right-0 z-50 py-5;
-  @apply bg-stone-100/75 dark:bg-zinc-900/75;
+  @apply bg-slate-100/75 dark:bg-slate-900/75;
   @apply backdrop-blur-sm saturate-200;
 }
 

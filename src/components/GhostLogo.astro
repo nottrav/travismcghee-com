@@ -31,21 +31,21 @@ const { width = 30, height = 30 } = Astro.props;
 
 <style>
   /*
-    Light mode: zinc-900 circle, stone-100 ghost, zinc-900 eyes
-    Dark  mode: stone-100 circle, zinc-900 ghost, stone-100 eyes
+    Light mode: slate-900 circle, slate-100 ghost, slate-900 eyes
+    Dark  mode: slate-100 circle, slate-900 ghost, slate-100 eyes
     Hover: subtle accent tint on circle
   */
   :root {
-    --ghost-circle: #18181b; /* zinc-900 */
+    --ghost-circle: #0f172a; /* slate-900 */
     --ghost-circle-hover: oklch(35% 0.12 250); /* slate blue tinted */
-    --ghost-body:   #f5f5f4; /* stone-100 */
-    --ghost-eye:    #18181b; /* zinc-900 */
+    --ghost-body:   #f1f5f9; /* slate-100 */
+    --ghost-eye:    #0f172a; /* slate-900 */
   }
   :global(.dark) {
-    --ghost-circle: #f5f5f4; /* stone-100 */
+    --ghost-circle: #f1f5f9; /* slate-100 */
     --ghost-circle-hover: oklch(92% 0.04 250); /* light slate blue tint */
-    --ghost-body:   #18181b; /* zinc-900 */
-    --ghost-eye:    #f5f5f4; /* stone-100 */
+    --ghost-body:   #0f172a; /* slate-900 */
+    --ghost-eye:    #f1f5f9; /* slate-100 */
   }
 
   @keyframes ghost-bob {
