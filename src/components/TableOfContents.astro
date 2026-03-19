@@ -18,7 +18,7 @@ const filteredHeadings = headings.filter((h) => h.depth <= 3);
           <li style={heading.depth > 2 ? `padding-left: ${(heading.depth - 2) * 1}rem` : ""}>
             <a
               href={`#${heading.slug}`}
-              class="toc-link no-underline text-black/50 dark:text-white/60 transition-colors duration-200"
+              class="toc-link no-underline text-black/65 dark:text-white/60 transition-colors duration-200"
             >
               {heading.text}
             </a>

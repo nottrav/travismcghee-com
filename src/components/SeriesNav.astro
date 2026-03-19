@@ -17,12 +17,12 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
 <nav class="series-nav rounded-lg border border-black/15 dark:border-white/20 overflow-hidden my-8">
   <div class="px-4 py-3 border-b border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
     <div class="flex items-center gap-2 text-sm">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="size-4 text-black/40 dark:text-white/40">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="size-4 text-black/50 dark:text-white/50">
         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
       </svg>
       <span class="font-semibold text-black dark:text-white">{series.name}</span>
-      <span class="text-black/40 dark:text-white/40">&middot;</span>
-      <span class="text-black/40 dark:text-white/40">Part {series.order} of {sorted.length}</span>
+      <span class="text-black/50 dark:text-white/50">&middot;</span>
+      <span class="text-black/50 dark:text-white/50">Part {series.order} of {sorted.length}</span>
     </div>
   </div>
 
@@ -32,7 +32,7 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
         href={`/blog/${prev.slug}`}
         class="series-link group flex flex-col gap-1 px-4 py-3 no-underline border-r border-black/10 dark:border-white/10 hover:bg-[var(--accent-subtle)] transition-colors duration-200"
       >
-        <span class="series-label text-[11px] uppercase tracking-wider text-black/35 dark:text-white/35 flex items-center gap-1 transition-colors duration-200">
+        <span class="series-label text-[11px] uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-1 transition-colors duration-200">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3">
             <polyline points="15 18 9 12 15 6" />
           </svg>
@@ -51,7 +51,7 @@ const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
         href={`/blog/${next.slug}`}
         class="series-link group flex flex-col gap-1 px-4 py-3 no-underline text-right hover:bg-[var(--accent-subtle)] transition-colors duration-200"
       >
-        <span class="series-label text-[11px] uppercase tracking-wider text-black/35 dark:text-white/35 flex items-center justify-end gap-1 transition-colors duration-200">
+        <span class="series-label text-[11px] uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center justify-end gap-1 transition-colors duration-200">
           Next
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-3">
             <polyline points="9 18 15 12 9 6" />
